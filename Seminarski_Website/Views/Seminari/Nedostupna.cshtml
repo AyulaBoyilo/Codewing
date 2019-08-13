@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Nedostupna stranica";
+}
+
+<h3 style="margin-top: 40px;">Pristup stranicama za uređivanje je dozvoljen samo zaposlenima. Predbilježba na seminare je moguća na stranici za korisnike:</h3>
+
+@{
+    Session["Seminar"] = null;
+}
+
+<div>
+    @Html.ActionLink("Natrag na predbilježbe", "Pretraga", "Predbiljezba")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

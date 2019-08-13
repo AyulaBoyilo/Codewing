@@ -1,0 +1,362 @@
+﻿
+@using Seminarski_Website.Models
+@model IEnumerable<PregledPredbiljezbi>
+
+
+@{
+    ViewBag.Title = "Pregled predbilježbi";
+}
+
+<script type="text/javascript">
+    function ToggleDiv(Flag) {
+        if (Flag == "sve") {
+            document.getElementById('svePredbiljezbe').style.display = 'block';
+            document.getElementById('nepregledane').style.display = 'none';
+            document.getElementById('potvrdjene').style.display = 'none';
+            document.getElementById('nepotvrdjene').style.display = 'none';
+        }
+        else if (Flag == "nepreg") {
+            document.getElementById('svePredbiljezbe').style.display = 'none';
+            document.getElementById('nepregledane').style.display = 'block';
+            document.getElementById('potvrdjene').style.display = 'none';
+            document.getElementById('nepotvrdjene').style.display = 'none';
+        }
+
+        else if (Flag == "potvrd") {
+            document.getElementById('svePredbiljezbe').style.display = 'none';
+            document.getElementById('nepregledane').style.display = 'none';
+            document.getElementById('potvrdjene').style.display = 'block';
+            document.getElementById('nepotvrdjene').style.display = 'none';
+        }
+
+        else {
+            document.getElementById('svePredbiljezbe').style.display = 'none';
+            document.getElementById('nepregledane').style.display = 'none';
+            document.getElementById('potvrdjene').style.display = 'none';
+            document.getElementById('nepotvrdjene').style.display = 'block';
+        }
+    }
+</script>
+
+<h2>Pregled predbilježbi</h2>
+
+
+@using (Html.BeginForm())
+{
+    <p>
+        Pretraga predbilježbi: @Html.TextBox("SearchString")
+        <input type="submit" value="Traži" />
+    </p>
+}
+
+<div style="margin-bottom: 10px;">
+    <input class="btn btn-default" id="Submit1" type="submit" value="Sve" onclick="return ToggleDiv('sve')" />
+    <input class="btn btn-default" id="Submit2" type="submit" value="Nepregledane" onclick="return ToggleDiv('nepreg')" />
+    <input class="btn btn-default" id="Submit2" type="submit" value="Potvrđene" onclick="return ToggleDiv('potvrd')" />
+    <input class="btn btn-default" id="Submit2" type="submit" value="Odbijene" onclick="return ToggleDiv('nepotvr')" />
+</div>
+
+
+<div id="svePredbiljezbe" style="display:block">
+    <table class="table">
+        <tr style="background-color: whitesmoke;">
+            <th></th>
+            <th>
+                Naziv
+            </th>
+            <th>
+                Datum
+            </th>
+            <th>
+                Ime
+            </th>
+            <th>
+                Prezime
+            </th>
+            <th>
+                Adresa
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Telefon
+            </th>
+            <th>
+                Potvrđena
+            </th>
+            <th>
+                Popunjeno
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (PregledPredbiljezbi item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Odaberi", "Uredi", new { id = item.IdPredbiljezbe })
+                </td>
+                <td>
+                    @item.Naziv
+                </td>
+                <td>
+                    @item.Datum.ToString("dd.MM.yyyy.")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prezime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adresa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefon)
+                </td>
+                @if (item.Stanje == null)
+                {
+                    <td style="text-align:center">/</td>
+                }
+                else
+                {
+
+                    <td style="text-align:center">@(Convert.ToBoolean(item.Stanje) ? "Da" : "Ne")</td>
+                }
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Popunjen)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div id="nepregledane" style="display:none">
+    <table class="table">
+        <tr style="background-color: whitesmoke;">
+            <th></th>
+            <th>
+                Naziv
+            </th>
+            <th>
+                Datum
+            </th>
+            <th>
+                Ime
+            </th>
+            <th>
+                Prezime
+            </th>
+            <th>
+                Adresa
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Telefon
+            </th>
+            <th>
+                Potvrđena
+            </th>
+            <th>
+                Popunjeno
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (PregledPredbiljezbi item in Model)
+        {
+            if (item.Stanje == null)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Odaberi", "Uredi", new { id = item.IdPredbiljezbe })
+                    </td>
+                    <td>
+                        @item.Naziv
+                    </td>
+                    <td>
+                        @item.Datum.ToString("dd.MM.yyyy.")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prezime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adresa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefon)
+                    </td>
+                    <td style="text-align:center">/</td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Popunjen)
+                    </td>
+                </tr>
+            }
+
+        }
+
+    </table>
+</div>
+
+<div id="potvrdjene" style="display:none">
+    <table class="table">
+        <tr style="background-color: whitesmoke;">
+            <th></th>
+            <th>
+                Naziv
+            </th>
+            <th>
+                Datum
+            </th>
+            <th>
+                Ime
+            </th>
+            <th>
+                Prezime
+            </th>
+            <th>
+                Adresa
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Telefon
+            </th>
+            <th>
+                Potvrđena
+            </th>
+            <th>
+                Popunjeno
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (PregledPredbiljezbi item in Model)
+        {
+            if (item.Stanje == true)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Odaberi", "Uredi", new { id = item.IdPredbiljezbe })
+                    </td>
+                    <td>
+                        @item.Naziv
+                    </td>
+                    <td>
+                        @item.Datum.ToString("dd.MM.yyyy.")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prezime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adresa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefon)
+                    </td>
+                    <td style="text-align:center">Da</td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Popunjen)
+                    </td>
+                </tr>
+            }
+
+        }
+
+    </table>
+</div>
+
+<div id="nepotvrdjene" style="display:none">
+    <table class="table">
+        <tr style="background-color: whitesmoke;">
+            <th></th>
+            <th>
+                Naziv
+            </th>
+            <th>
+                Datum
+            </th>
+            <th>
+                Ime
+            </th>
+            <th>
+                Prezime
+            </th>
+            <th>
+                Adresa
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Telefon
+            </th>
+            <th>
+                Potvrđena
+            </th>
+            <th>
+                Popunjeno
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (PregledPredbiljezbi item in Model)
+        {
+            if (item.Stanje == false)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Odaberi", "Uredi", new { id = item.IdPredbiljezbe })
+                    </td>
+                    <td>
+                        @item.Naziv
+                    </td>
+                    <td>
+                        @item.Datum.ToString("dd.MM.yyyy.")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prezime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adresa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefon)
+                    </td>
+                    <td style="text-align:center">Ne</td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Popunjen)
+                    </td>
+                </tr>
+            }
+
+        }
+
+    </table>
+</div>

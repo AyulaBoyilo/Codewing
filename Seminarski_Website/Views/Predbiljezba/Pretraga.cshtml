@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Seminarski_Website.Models.Seminar>
+
+@{
+    ViewBag.Title = "Predbilježba";
+}
+
+<h2>Izbor seminara</h2>
+
+    @using (Html.BeginForm())
+    {
+    <p>
+        Pretraga seminara: @Html.TextBox("SearchString")
+        <input type="submit" value="Traži" />
+    </p>
+     }
+
+
+    <table class="table">
+        <tr style="background-color: whitesmoke;">
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Naziv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Datum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Opis)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (!item.Popunjen)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Odaberi", "CreateUser", new { id = item.IdSeminar })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naziv)
+                    </td>
+                    <td>
+                        @item.Datum.ToString("dd.MM.yyyy.")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Opis)
+                    </td>
+                </tr>
+            }
+        }
+    </table>

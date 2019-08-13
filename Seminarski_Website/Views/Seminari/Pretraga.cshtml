@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Seminarski_Website.Models.Seminar>
+
+@{
+    ViewBag.Title = "Uređivanje seminara";
+    int i = 0;
+}
+
+<h2>Uređivanje seminara</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Pretraga seminara: @Html.TextBox("SearchString")
+        <input type="submit" value="Traži" />
+    </p>
+}
+
+    <div style="margin-bottom: 10px;">
+        <input type="button" class="btn btn-info" value="Novi seminar" onclick="location.href='@Url.Action("Stvori", "Seminari")'" />
+    </div>
+
+<table class="table">
+    <tr style="background-color: whitesmoke;">
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Opis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Datum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Popunjen)
+        </th>
+        <th>
+            @Html.Label("Potvrđeno")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Uredi", "Uredi", new { id = item.IdSeminar }) @Html.ActionLink("Obriši", "Obrisi", new { id = item.IdSeminar })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis)
+            </td>
+            <td>
+                @item.Datum.ToString("dd.MM.yyyy.")
+            </td>
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.Popunjen)
+            </td>
+            <td>
+                <p style="text-align:center">@ViewBag.BrojPotvrda[i]</p>
+                @{i++;
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

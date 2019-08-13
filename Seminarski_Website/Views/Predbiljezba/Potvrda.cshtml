@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Potvrda";
+}
+
+<h4 style="margin-top: 40px;">Potvrđujemo da ste se uspješno predbilježili na seminar:</h4>
+<h2>@Session["Seminar"]</h2>
+
+@{
+    Session["Seminar"] = null;
+}
+
+<div>
+    @Html.ActionLink("Natrag na popis", "Pretraga")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

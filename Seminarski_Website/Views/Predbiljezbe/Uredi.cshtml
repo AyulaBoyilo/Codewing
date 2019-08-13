@@ -1,0 +1,128 @@
+﻿@using Seminarski_Website.Models
+@model PregledPredbiljezbi
+@{
+    ViewBag.Title = "Status predbilježbe";
+}
+
+<style>
+    .naziv {
+        text-align: right;
+        font-weight: bold;
+        margin: 0px;
+    }
+
+    @@media screen and (max-width: 989px) {
+        .naziv {
+            text-align: left;
+        }
+
+        .potvrda {
+            display: none;
+        }
+    }
+</style>
+
+<h2>Uređivanje statusa predbilježbe</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <div class="col-md-2 col-sm-12">
+                <p class="naziv">Naziv seminara:</p>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                @Html.DisplayFor(model => model.Naziv)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-sm-12">
+                <p class="naziv">Datum seminara:</p>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                @Model.Datum.ToString("dd. MM. yyyy.")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-sm-12">
+                <p class="naziv">Broj potvrđenih polaznika:</p>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                <br class="potvrda" />
+                <p style="margin:0px;">@ViewBag.BrojPotvrda</p>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-2 col-sm-12">
+                <p class="naziv">Ime polaznika:</p>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                @Html.DisplayFor(model => model.Ime)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-sm-12">
+                <p class="naziv">Prezime polaznika:</p>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                @Html.DisplayFor(model => model.Prezime)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-sm-12">
+                <p class="naziv">Adresa polaznika:</p>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                @Html.DisplayFor(model => model.Adresa)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-sm-12">
+                <p class="naziv">Email polaznika:</p>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                @Html.DisplayFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-sm-12">
+                <p class="naziv">Telefon polaznika:</p>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                @Html.DisplayFor(model => model.Telefon)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-sm-12">
+                <p class="naziv">Status predbilježbe:</p>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                <input type="radio" name="stanje" value="prihvacena" />  Prihvaćena
+                <input type="radio" name="stanje" value="odbijena" style="margin-left: 10px;" />  Odbijena
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Spremi" />
+            </div>
+        </div>
+    </div>
+}
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
